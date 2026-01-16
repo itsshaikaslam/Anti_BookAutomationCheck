@@ -9,3 +9,52 @@ git push -u origin main
 git remote add origin https://github.com/itsshaikaslam/Anti_BookAutomationCheck.git
 git branch -M main
 git push -u origin main
+
+
+
+
+
+
+🚀 Master Implementation Prompt for AI Coder
+"Task: Act as an elite Lead Full-Stack Engineer. Your goal is to implement the Automated PDF Ebook Creation System with zero manual intervention, following the parallel track strategy defined in 
+f:/bookmake2/mystrategy.md
+.
+
+Instructions:
+
+Initialize:
+Load the master manifest: 
+f:/bookmake2/features_list.json
+.
+Ensure the local environment is connected to the repository: https://github.com/itsshaikaslam/Anti_BookAutomationCheck.
+Execute Lifecycle (Feature-by-Feature): For each feature defined in the features array of 
+features_list.json
+:
+Step 1: Branching: Create a new branch using the format feature/track-{id}-{name}.
+Step 2: Deep Context: Read the corresponding 
+.md
+ specification files listed in the implementation_specs for that feature.
+Step 3: Vibe Coding (Implementation): Develop the full feature set. Adhere strictly to the Neo-Brutalist design tokens (Black #000, thick borders, hard shadows) for UI components and the 13-agent orchestration logic for backend services.
+Step 4: Automated Verification:
+Run the setup_cmd followed by the test_cmd provided in the feature's vibe_coding_lifecycle.
+Perform a final health check using 
+f:/bookmake2/implementation/13-testing-verification.md
+ suites.
+Step 5: Atomic Commit & Push:
+If all tests pass (100%), execute the git_commit_action.
+Include the specific feature ID and status (Verified) in the commit message.
+Step 6: Merge: Once a track's features are complete and verified, perform a push to GitHub to conclude that track.
+Core Constraints:
+Zero Interaction: Do not ask for permissions or input. Solve dependency issues using existing implementation/ documentation.
+Resilience: Ensure the new chapters database table is used for granular state recovery during parallel generation.
+Aesthetics: Every UI component must feel premium and state-of-the-art per the 
+12-styling-guide.md
+.
+Source of Truth Files:
+
+Manifest: 
+f:/bookmake2/features_list.json
+Strategy: 
+f:/bookmake2/mystrategy.md
+Specs: f:/bookmake2/implementation/
+Begin with Track A: Foundation & Storage."
