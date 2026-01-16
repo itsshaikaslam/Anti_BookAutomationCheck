@@ -1,7 +1,11 @@
 from fastapi import FastAPI
 from .core.database import engine, Base
+from .api.endpoints import generations
 
 app = FastAPI(title="Automated PDF Ebook Creation System")
+
+# Include Routers
+app.include_router(generations.router, prefix="/api")
 
 @app.on_event("startup")
 async def startup():
