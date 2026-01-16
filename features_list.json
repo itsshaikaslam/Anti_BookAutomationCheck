@@ -1,0 +1,172 @@
+{
+    "project_manifest": {
+        "name": "Automated PDF Ebook Creation System",
+        "strategy_ref": "f:/bookmake2/mystrategy.md",
+        "git_workflow": {
+            "branching": "feature/track-{id}-{name}",
+            "commit_message_format": "feat({track}): {description}\n\nReviewer: {review_agent}\nStatus: Verified via Automated Suite",
+            "merge_procedure": "Automated PR created upon 100% test pass -> Squash merge into main"
+        }
+    },
+    "features": [
+        {
+            "id": "A-01",
+            "track": "Track A: Foundation & Storage",
+            "feature": "Core Infrastructure & Resilient Storage",
+            "user_story": "As a User, I want a reliable environment and persistent storage so that my ebook projects are never lost and the system is always ready to work.",
+            "components": [
+                "Docker Compose (FastAPI, Redis, Postgres, MinIO, Ollama)",
+                "PostgreSQL 15 Database Schema",
+                "Google Drive OAuth2 Integration",
+                "MinIO S3-compatible Internal Storage"
+            ],
+            "technical_properties": {
+                "persistence": "Dual-sync mode (Local + Cloud)",
+                "resilience": "Multi-table schema for chapter-level state recovery",
+                "environment": "Containerized for zero-host-dependency"
+            },
+            "user_acceptance_criteria": [
+                "System starts all 5 services with a single docker-compose command.",
+                "Database successfully tracks chapter-level progress for parallel generations.",
+                "Files are simultaneously available in local MinIO and remote Google Drive folders.",
+                "Automatic fallback to MinIO occurs if Google Drive API is unavailable."
+            ],
+            "vibe_coding_lifecycle": {
+                "setup_cmd": "docker-compose up -d",
+                "implementation_specs": [
+                    "f:/bookmake2/implementation/01-project-setup.md",
+                    "f:/bookmake2/implementation/02-database-schema.md",
+                    "f:/bookmake2/implementation/04-storage-layer.md"
+                ],
+                "test_cmd": "./scripts/health_check.sh && pytest tests/storage",
+                "git_commit_action": "git checkout -b feature/track-a-foundation && git add . && git commit -m 'feat(track-a): implement core infra and dual storage' && git push origin feature/track-a-foundation"
+            }
+        },
+        {
+            "id": "B-01",
+            "track": "Track B: Logic & API",
+            "feature": "13-Agent Orchestration & Secure API",
+            "user_story": "As a Content Creator, I want to provide a single topic and have the system orchestrate a team of AI agents to research, write, and format an ebook for me without any manual intervention.",
+            "components": [
+                "FastAPI REST Endpoints",
+                "JWT Authentication & Refresh Strategy",
+                "Celery Agent Orchestrator",
+                "13 Specialized Agent Modules (Sequential & Parallel Swarms)"
+            ],
+            "technical_properties": {
+                "security": "Role-Based Access Control (Admin/User)",
+                "concurrency": "Parallel Research and Chapter Generation swarms",
+                "transparency": "Real-time WebSocket progress and per-chapter internal logs"
+            },
+            "user_acceptance_criteria": [
+                "User can login and receive a valid JWT token.",
+                "A single /api/generations call triggers the 10-15 minute 13-agent pipeline.",
+                "Parallel agents do not deadlock or compete for DB locks.",
+                "Fact-verification agent achieves 95%+ accuracy across 7-pass validation."
+            ],
+            "vibe_coding_lifecycle": {
+                "setup_cmd": "pip install -r requirements.txt && celery -A worker worker --loglevel=info",
+                "implementation_specs": [
+                    "f:/bookmake2/implementation/03-authentication.md",
+                    "f:/bookmake2/implementation/05-api-and-actions.md",
+                    "f:/bookmake2/implementation/06-types-and-constants.md"
+                ],
+                "test_cmd": "pytest tests/api tests/orchestration",
+                "git_commit_action": "git checkout -b feature/track-b-orchestration && git add . && git commit -m 'feat(track-b): implement 13-agent orchestrator and JWT auth' && git push origin feature/track-b-orchestration"
+            }
+        },
+        {
+            "id": "C-01",
+            "track": "Track C: Design System",
+            "feature": "Neo-Brutalist UI & Component Kit",
+            "user_story": "As a User, I want a modern, high-contrast, and responsive interface so that I can easily monitor my ebook generation progress and manage my assets with a premium experience.",
+            "components": [
+                "Tailwind CSS Configuration (Neo-Brutalist Tokens)",
+                "Reusable Neo-Card & Button Library",
+                "Progress Swarm Visualizer",
+                "Agent Log Terminal",
+                "Fact-Check Result Tiles"
+            ],
+            "technical_properties": {
+                "aesthetic": "High-contrast, bold borders (4-8px), hard shadows (no blur)",
+                "accessibility": "WCAG 2.1 AA compliant, full keyboard navigation (CMD+G, etc.)",
+                "responsiveness": "Optimized for mobile viewing and ultra-wide monitoring"
+            },
+            "user_acceptance_criteria": [
+                "The interface strictly adheres to Neo-Brutalist design tokens (Black #000, Neo-Yellow, Neo-Pink).",
+                "The Agent Log Terminal auto-scrolls with real-time JSON log streams.",
+                "Fact-Check tiles distinctively show 'Verified' vs 'Warning' states with confidence scores.",
+                "Navigation is fully operable via keyboard shortcuts without a mouse."
+            ],
+            "vibe_coding_lifecycle": {
+                "setup_cmd": "npm install",
+                "implementation_specs": [
+                    "f:/bookmake2/implementation/07-ui-components.md",
+                    "f:/bookmake2/implementation/11-keyboard-navigation.md",
+                    "f:/bookmake2/implementation/12-styling-guide.md"
+                ],
+                "test_cmd": "npm run test:visual && npm run test:accessibility",
+                "git_commit_action": "git checkout -b feature/track-c-ui && git add . && git commit -m 'feat(track-c): implement neo-brutalist design system' && git push origin feature/track-c-ui"
+            }
+        },
+        {
+            "id": "D-01",
+            "track": "Track D: Advanced Modules",
+            "feature": "Pipeline Kanban & Historical Insights",
+            "user_story": "As an Administrator, I want a bird's-eye view of all active and past generations so that I can oversee system health, statistics, and individual task performance.",
+            "components": [
+                "DND-enabled Pipeline Kanban Board",
+                "Interactive History Calendar",
+                "Advanced Filtering & Search Engine"
+            ],
+            "technical_properties": {
+                "visualization": "Cards automatically transition across columns based on WebSocket events",
+                "search": "Postgres tsvector-backed full-text search",
+                "reporting": "Heatmap of generation volume and agent speed benchmarks"
+            },
+            "user_acceptance_criteria": [
+                "Kanban cards move in real-time as agents progress through stages (Queued -> Analysis -> Drafting -> Publishing).",
+                "Calendar view correctly aggregates historical entries for audit and reporting.",
+                "Filters successfully narrow results by language, quality score, and content depth (1-level/2-level)."
+            ],
+            "vibe_coding_lifecycle": {
+                "setup_cmd": "npm install",
+                "implementation_specs": [
+                    "f:/bookmake2/implementation/08-kanban-board.md",
+                    "f:/bookmake2/implementation/09-calendar-view.md",
+                    "f:/bookmake2/implementation/10-filtering-system.md"
+                ],
+                "test_cmd": "npm run test:e2e",
+                "git_commit_action": "git checkout -b feature/track-d-modules && git add . && git commit -m 'feat(track-d): implement kanban board and calendar' && git push origin feature/track-d-modules"
+            }
+        },
+        {
+            "id": "E-01",
+            "track": "Track E: Verification",
+            "feature": "Automated Quality Assurance Suite",
+            "user_story": "As a Developer, I want a zero-manual-intervention testing suite so that I can confidently deploy updates and ensure the system maintains 100% reliability.",
+            "components": [
+                "Pytest Backend Suite (Mocked & Local)",
+                "Playwright Headless UI Automation",
+                "E2E Generation Health-Check Scripts"
+            ],
+            "technical_properties": {
+                "automation": "100% headless, CLI-driven",
+                "coverage": "Includes visual regression, functional, and performance benchmarks"
+            },
+            "user_acceptance_criteria": [
+                "The full test suite completes in < 5 minutes for core services.",
+                "Any breaking change in the orchestration logic triggers an immediate pipeline halt.",
+                "Performance metrics (Topic Analysis < 30s) are automatically enforced."
+            ],
+            "vibe_coding_lifecycle": {
+                "setup_cmd": "chmod +x scripts/*.sh",
+                "implementation_specs": [
+                    "f:/bookmake2/implementation/13-testing-verification.md"
+                ],
+                "test_cmd": "./scripts/full_pipeline_test.sh",
+                "git_commit_action": "git checkout -b feature/track-e-qa && git add . && git commit -m 'feat(track-e): implement automated QA suite' && git push origin feature/track-e-qa"
+            }
+        }
+    ]
+}
